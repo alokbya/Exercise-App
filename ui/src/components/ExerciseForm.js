@@ -43,7 +43,7 @@ function ExerciseForm({name, setName,
                 
                 <label for="date">Date</label>
                 <input
-                    type="string"
+                    type="date"
                     id="date"
                     placeholder="Enter exercise date"
                     value={date}

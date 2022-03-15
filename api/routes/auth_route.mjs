@@ -1,5 +1,7 @@
 import { application } from 'express';
 import * as users from '../models/user_model.mjs';
+import * as userProfiles from '../models/user_profile_model.mjs';
+import * as sessions from '../models/exercise_session_model.mjs';
 import * as blackList from '../models/blacklist_model.mjs';
 import express from 'express';
 import bcrypt from 'bcrypt';
@@ -41,10 +43,12 @@ router.post('/register', async (req, res) => {
 
         // Create new user
         const user = await users.createUser(first_name, last_name, email, encrypted_password);
-        
+        const profile = await userProfiles.addUserProfile(user._id);
+        const session = await sessions.addSession(profile._id, 'default');
+
         // Create signed token
         const token = jwt.sign(
-            { user_id: user._id, email },
+            { user_id: user._id, email, profile_id: profile._id, default_session: session._id},
             process.env.TOKEN_KEY,
             {
                 expiresIn: '2h',
@@ -85,10 +89,17 @@ router.post('/login', async (req, res) => {
             res.status(400).json({Error: 'Invalid username or password'});
         }
         const pUser = JSON.parse(JSON.stringify(user))[0];
+
+        const profile = await userProfiles.getUserProfile({user: pUser._id});
+        const session = await sessions.getSession({name: 'default'});
+
+        const pProfile = JSON.parse(JSON.stringify(profile))[0];
+        const pSession = JSON.parse(JSON.stringify(session))[0];
+        
         if (user && (await bcrypt.compare(password, pUser.password))) {
             // Create token
             const token = jwt.sign(
-                { user_id: pUser._id, email },
+                { user_id: pUser._id, email, profile_id: pProfile._id, default_session: pSession._id},
                 process.env.TOKEN_KEY,
                 {
                     expiresIn: '2h',
@@ -101,7 +112,7 @@ router.post('/login', async (req, res) => {
             // Set token cookie (JWT)
             res.cookie('token', token).status(200).json(user);
         }
-        res.status(400).json({Error: 'Invalid username or password'});
+        // res.status(400).json({Error: 'Invalid username or password'});
     } catch(error) {
         console.error(error);
         res.status(500).json({Error: `${error}`});
@@ -129,36 +140,6 @@ router.delete('/logout', destroyToken, (req, res) => {
         .catch(error => {
             res.status(500).json({Status: 'Unable to blacklist token'});
         });
-});
-
-/*********************************************
-    * HELPER FUNCTIONS FOR DEVELOPMENT ONLY
-*********************************************/
-
-router.get('/users', async (req, res) => {
-    users.getUser({})
-        .then(users => {
-            res.status(200).json(users);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).json({Error: `{error}`});
-        });
-});
-
-router.delete('/users/:id', async (req, res) => {
-    users.deleteUser({_id: req.params.id})
-        .then(user => {
-            if (user.deletedCount > 0) {
-                res.status(204).json({Status: `Deleted user: ${req.params.id}`});
-            } else {
-                res.status(404).json({Error: "Document not found"});
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).json({Error: `${error}`});
-        })
 });
 
 export { router };

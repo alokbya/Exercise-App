@@ -9,6 +9,7 @@ import EditExercisePage from './pages/EditExercisePage';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import AuthenticationPage from './pages/AuthenticationPage';
+import UserProfilePage from './pages/UserProfilePage';
 
 function App() {
   const history = useHistory();  
@@ -31,10 +32,13 @@ function App() {
             <AuthenticationPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
           </Route>
           <Route path="/create-exercise">
-            <CreateExercisePage />
+            <CreateExercisePage loggedIn={loggedIn}/>
           </Route>
           <Route path="/edit-exercise">
             <EditExercisePage exercise={exerciseToEdit}/>
+          </Route>
+          <Route path="/profile" exact>
+            <UserProfilePage loggedIn={loggedIn}/>
           </Route>
         </main>
         <footer>

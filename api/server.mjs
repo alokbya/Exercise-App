@@ -1,5 +1,6 @@
 import { router as exercises_route } from './routes/exercises_route.mjs'
 import { router as auth_route } from './routes/auth_route.mjs';
+import {router as users_route } from './routes/users_route.mjs';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 
@@ -29,6 +30,7 @@ app.use(express.json())
 
 app.use('/auth', auth_route);
 app.use('/exercises', exercises_route);
+app.use('/users', users_route);
 // Validate session id for authentication
 
 

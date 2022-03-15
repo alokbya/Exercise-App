@@ -48,7 +48,7 @@ function HomePage({setExerciseToEdit, loggedIn}) {
 
     if (isLoading) {
         return (
-            <p className="loading">Loading...</p>
+            <div class="loader"></div>
         )
     }
     else if (!isLoading && exercises.length === 0) {

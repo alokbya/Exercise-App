@@ -34,14 +34,19 @@ router.use(verifyToken)
     * This endpoint will use a cookie (token) to determine which user is associated with this exercise.
 */
 router.post("/", async (req, res) => {
-    
+    let session = req.body.session;
+    if (session === undefined || session === null) {
+        session = "default"; 
+    }
     await exercises.addExercise(
         req.body.name,
         req.body.reps,
         req.body.weight,
         req.body.unit === "kg" ? "kg" : "lbs",
         req.body.date,
-        req.user.user_id)
+        req.user.profile_id,
+        req.body.session === null || req.body.session === undefined ? req.user.default_session : req.body.session
+        )
         .then(exercise => {
             res.status(201).json(exercise)
         })
@@ -57,7 +62,7 @@ router.post("/", async (req, res) => {
 */
 router.get("/", async (req, res) => {
     const filter = {};
-    filter.user = req.user.user_id;
+    filter.user = req.user.profile_id;
     await exercises.getExercise(filter, '', 0)
         .then(exercise => {
             if(exercise !== null) {

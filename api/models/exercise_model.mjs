@@ -3,8 +3,8 @@ import { Exercise } from "../data/app.data.mjs";
 /*
     * Add
 */
-const addExercise = async (name, reps, weight, unit, date, user) => {
-    const exercise = new Exercise({name, reps, weight, unit, date, user});
+const addExercise = async (name, reps, weight, unit, date, user, session) => {
+    const exercise = new Exercise({name, reps, weight, unit, date, user, session});
     return exercise.save();
 }
 
@@ -21,6 +21,15 @@ const getExercise = async (filter, projection, limit) => {
 
     // Execute query
     return query.exec();
+}
+
+/*
+    * Get by session id
+*/
+const getExerciseBySessionId = async (sessionId) => {
+    const query = Exercise.find();
+    query.and({session: sessionId});
+    query.exec();
 }
 
 /*
@@ -45,4 +54,4 @@ const deleteExercise = async (conditions) => {
 }
 
 // Export module functions
-export { addExercise, getExercise, updateExercise, deleteExerciseById, deleteExercise };
+export { addExercise, getExercise, getExerciseBySessionId, updateExercise, deleteExerciseById, deleteExercise };

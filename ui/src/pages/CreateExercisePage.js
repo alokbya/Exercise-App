@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ExerciseForm from '../components/ExerciseForm';
 
-function CreateExercisePage() {
+function CreateExercisePage({loggedIn}) {
 
     const [name, setName] = useState('');
     const [reps, setReps] = useState(0);
@@ -11,9 +11,11 @@ function CreateExercisePage() {
     const [date, setDate] = useState('03-08-2022');
 
     let history = useHistory();
-
+    if (!loggedIn) {
+        history.push('/login');
+    }
     const createExercise = async () => {
-        const newExercise = {name, reps, weight, unit, date};
+        const newExercise = {name, reps, weight, unit, date: date.toString().replace('/','-')};
         const response = await fetch('/exercises', {
             method: 'POST',
             body: JSON.stringify(newExercise),

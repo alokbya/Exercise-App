@@ -1,20 +1,15 @@
 import React, {useState} from 'react'
 
 import '../css/Popup.css';
+import '../css/Loading.css';
 
 function ProfileMainStatsPopup({displayPopup, setDisplayPopup, 
-  userWeight, setUserWeight, 
-  userWeightVal, setUserWeightVal,
-  userHeight, setUserHeight,
-  userHeightIn, setUserHeightIn,
-  userHeightFt, setUserHeightFt,
-  userHeightVal, setUserHeightVal,
-  getProfileInfo, updateHeightFt,
-  updateHeightIn, cleanUpdateWeight}) {
+  userWeight, userHeight,
+  getProfileInfo}) {
 
-  const [ localWeight, setLocalWeight ] = useState(userWeightVal);
-  const [ localHeightIn, setLocalHeightIn ] = useState(userHeightIn);
-  const [ localHeightFt, setLocalHeightFt ] = useState(userHeightFt);
+  const [ localWeight, setLocalWeight ] = useState((userWeight.weight_lbs > -1 ? userWeight.weight_lbs : '230'));
+  const [ localHeightIn, setLocalHeightIn ] = useState((userHeight.height_in > -1 ? userHeight.height_in : '11'));
+  const [ localHeightFt, setLocalHeightFt ] = useState((userHeight.height_ft > -1 ? userHeight.height_ft : '5'));
 
   const limits = {
     weight_min: 0,
@@ -25,13 +20,22 @@ function ProfileMainStatsPopup({displayPopup, setDisplayPopup,
     heightIn_max: 11
   };
 
-  const hideDisplay = () => {
+  /***********************
+    * Manage Popup State
+  ***********************/
+
+  const closePopup = () => {
+    setLocalWeight((userWeight.weight_lbs > -1 ? userWeight.weight_lbs : '230'));
+    setLocalHeightIn()
     setDisplayPopup(false);
   }
 
+  /*****************
+    * Clean Inputs
+  *****************/
+
   const cleanInput = (input, oldVal) => {
-    const pInput = parseInt(input);
-    if (input.length > 1 && input[0] !== "0" || input.length === 1) return input;
+    if (input.length > 1 && input[0] !== "0" || input.length === 1 || input === '') return input;
     return oldVal;
   }
 
@@ -55,9 +59,12 @@ function ProfileMainStatsPopup({displayPopup, setDisplayPopup,
     if (pHeightIn >= limits.heightIn_min && pHeightIn <= limits.heightIn_max) setLocalHeightIn(pHeightIn.toString());
   }
 
+  /*******************************
+    * Update User Profile (PUT)
+  *******************************/
+
   const updateUserProfile = async () => {
     const height_combined = parseInt(localHeightFt)*12 + parseInt(localHeightIn);
-    setUserHeightVal(Math.floor(height_combined));
     const update = { weight_lbs: localWeight, height_in: height_combined };
     const response = await fetch('users/profile', {
       method: 'PUT',
@@ -68,13 +75,14 @@ function ProfileMainStatsPopup({displayPopup, setDisplayPopup,
     });
 
     if (response.status === 201) {
-      hideDisplay();
-      updateHeightFt(localHeightFt);
-      updateHeightIn(localHeightIn);
-      cleanUpdateWeight(localWeight);
+      getProfileInfo();
+      closePopup();
     }
   }
 
+  /***********************
+        * Render Content
+  ***********************/
 
   return (displayPopup) ? (
     <div className="popup">
@@ -122,7 +130,7 @@ function ProfileMainStatsPopup({displayPopup, setDisplayPopup,
           </div>            
           <div className="popup-btns">
             <button id="popup-update" className="popup-btn" onClick={updateUserProfile}>Update</button>
-            <button id="popup-close" className="popup-btn" onClick={hideDisplay}>Close</button>
+            <button id="popup-close" className="popup-btn" onClick={closePopup}>Close</button>
           </div>
         </div>
     </div>  

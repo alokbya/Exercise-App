@@ -2,80 +2,95 @@ import React, {useEffect, useState} from 'react'
 import ProfileMainStatsPopup from './ProfileMainStatsPopup';
 import { convertLbsToKg, convertKgToLbs, convertInToFtIn } from '../helpers/conversions.mjs'
 
+import '../css/Loading.css';
+
 function ProfileMainStats() {
-    const [ profile, setProfile ] = useState([]);
-    const [ userWeight, setUserWeight ] = useState();
-    const [ userWeightVal, setUserWeightVal ] = useState();
+    const [ userWeight, setUserWeight ] = useState({});
     const [ userHeight, setUserHeight ] = useState();
-    const [ userHeightVal, setUserHeightVal ] = useState();
-    const [ userHeightFt, setUserHeightFt ] = useState();
-    const [ userHeightIn, setUserHeightIn ] = useState();
     const [ profileLoading, setProfileLoading ] = useState(true);
     const [ displayPopup, setDisplayPopup ] = useState(false);
 
-    const cleanHeight = async (height_in) => {
-        const height = convertInToFtIn(height_in);
-        setUserHeightFt(height.feet);
-        setUserHeightIn(height.inches);
+    /**************************
+        * Manage Popup State
+    **************************/
+   
+    const openPopup = () => {
+        setDisplayPopup(true);
     }
 
-    const updateHeightFt = (ft) => {
-        setUserHeightFt(ft);
-        setUserHeightVal(parseInt(userHeightFt)*12 + parseInt(userHeightIn));
+    /****************************
+        * Scrub (clean) Inputs
+    ****************************/
+
+    const scrubWeight = (weightObj) => {
+        const w = {}
+        if (weightObj === undefined) {
+            w.weight_obj = {};
+            w.weight_lbs = -1;            
+        } else {
+            w.weight_obj = weightObj;
+            w.weight_lbs = weightObj.weight_lbs;
+        }
+        setUserWeight(w);
     }
 
-    const updateHeightIn = (inches) => {
-        setUserHeightIn(inches);
-        setUserHeightVal(parseInt(userHeightFt)*12 + parseInt(userHeightIn));
+    const scrubHeight = async (heightObj) => {
+        const h = {};
+        if (heightObj === undefined) {
+            h.height_obj = {};
+            h.height_ft = -1;
+            h.height_in = -1;
+            h.height_in_total = -1;
+        } else {
+            h.height_obj = heightObj;
+            const cleanedHeight = convertInToFtIn(heightObj.height_in);
+            h.height_ft = cleanedHeight.feet;
+            h.height_in = cleanedHeight.inches;
+            h.height_in_total = heightObj.height_in;
+        }
+        setUserHeight(h);
     }
 
-    const cleanWeight = async (weight) => {
-        setUserWeight(weight);
-        setUserWeightVal(weight.weight_lbs);
-    }
+    /******************************
+        * Get User Profile (GET)
+    ******************************/
 
     const getProfileInfo = async () => {
         setProfileLoading(true);
         const response = await fetch('/users/profile');
         if (response.status === 200) {
             const obj = await response.json();
-            if (obj.height !== undefined) {
-                await setUserHeight(obj.height);
-                await cleanHeight(obj.height.height_in);
-            } else setUserHeight('nothing');
-            if (obj.weight !== undefined) await cleanWeight(obj.weight);
-            else setUserWeight('nothing');
+            scrubWeight(obj.weight);
+            await scrubHeight(obj.height);
         } else {
-
         }
         setProfileLoading(false);
     }
 
-    const showDisplay = () => {
-        setDisplayPopup(true);
-    }
+    /************************
+        * Lifecycle Hooks
+    ************************/
 
     useEffect(() => {
         getProfileInfo();
     }, []);
 
+    /***********************
+        * Render Content
+    ***********************/
+
     if (!profileLoading) {
         return (
             <>
-                <p>{userWeight.weight_lbs} lbs</p>
-                <p>{userHeightFt.toString()} ft {userHeightIn.toString()} in</p>
+                <p>{userWeight.weight_lbs > -1 ? `${userWeight.weight_lbs} lbs` : ''}</p>
+                <p>{userHeight.height_in_total > -1 ? `${userHeight.height_ft}' ${userHeight.height_in}"` : ''}</p>
                 {/* <p>{userWeight.weight_lbs}</p>
                 <p>{userHeight.height_in}</p> */}
-                <button onClick={showDisplay}>Log</button>
+                <button onClick={openPopup}>Log</button>
                 <ProfileMainStatsPopup displayPopup={displayPopup} setDisplayPopup={setDisplayPopup}
-                    userWeight={userWeight} setUserWeight={setUserWeight}
-                    userWeightVal={userWeightVal} setUserWeightVal={setUserWeightVal}
-                    userHeight={userHeight} setUserHeight={setUserHeight}
-                    userHeightIn={userHeightIn} setUserHeightIn={setUserHeightIn}
-                    userHeightFt={userHeightFt} setUserHeightFt={setUserHeightFt}
-                    userHeightVal={userHeightVal} setUserHeightVal={setUserHeightVal}
-                    getProfileInfo={getProfileInfo} updateHeightFt={updateHeightFt}
-                    updateHeightIn={updateHeightIn} cleanUpdateWeight={cleanWeight}
+                    userWeight={userWeight}
+                    userHeight={userHeight}
+                    getProfileInfo={getProfileInfo}
                 />
             </>
         );

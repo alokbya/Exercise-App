@@ -1,0 +1,45 @@
+
+#profile-stats {
+    max-width: 500px;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+}
+
+#user-weight {
+    grid-column-start: 2;
+    text-align: center;
+    margin-right: 15px;
+    
+}
+#user-height {
+    text-align: center;
+    margin-left: 15px;
+}
+
+#weight-date-added, #height-date-added{
+    color: gray;
+    font-style: italic;
+    font-size: 0.75em;
+}
+
+#open-popup-btn {
+    background-color: transparent;
+    color: steelblue;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    
+}
+#edit-icon {
+    height: 36px;
+    width: 36px;
+}
+#edit-icon:hover {
+    cursor: pointer;
+    color: coral;
+}
+
+#edit-icon:active {
+    color: rgba(255,99,71);
+}

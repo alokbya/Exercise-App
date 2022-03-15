@@ -2,7 +2,10 @@ import React, {useEffect, useState} from 'react'
 import ProfileMainStatsPopup from './ProfileMainStatsPopup';
 import { convertLbsToKg, convertKgToLbs, convertInToFtIn } from '../helpers/conversions.mjs'
 
+import {FaEdit} from 'react-icons/fa';
+
 import '../css/Loading.css';
+import '../css/ProfileMainStats.css'
 
 function ProfileMainStats() {
     const [ userWeight, setUserWeight ] = useState({});
@@ -13,7 +16,7 @@ function ProfileMainStats() {
     /**************************
         * Manage Popup State
     **************************/
-   
+
     const openPopup = () => {
         setDisplayPopup(true);
     }
@@ -82,11 +85,28 @@ function ProfileMainStats() {
     if (!profileLoading) {
         return (
             <>
-                <p>{userWeight.weight_lbs > -1 ? `${userWeight.weight_lbs} lbs` : ''}</p>
-                <p>{userHeight.height_in_total > -1 ? `${userHeight.height_ft}' ${userHeight.height_in}"` : ''}</p>
+                <div id="profile-stats">
+                    <div id="user-weight">
+                        <section id="weight-value">
+                            {userWeight.weight_lbs > -1 ? `${userWeight.weight_lbs} lbs` : ''}
+                        </section>
+                        <section id="weight-date-added">
+                            {Object.keys(userWeight.weight_obj).length === 0 ? '' : `added on ${userWeight.weight_obj.date.toString().slice(0, 10)}`}
+                        </section>
+                    </div>
+                    <div id="user-height">
+                        <section id="height-value">
+                            {userHeight.height_in_total > -1 ? `${userHeight.height_ft}' ${userHeight.height_in}"` : ''}
+                        </section>
+                        <section id="height-date-added">
+                            {Object.keys(userHeight.height_obj).length === 0 ? '' : `added on ${userHeight.height_obj.date.toString().slice(0, 10)}`}
+                        </section>
+                    </div>
+                    <div id="open-popup-btn" onClick={openPopup}><FaEdit id="edit-icon"/></div>
+                </div>
                 {/* <p>{userWeight.weight_lbs}</p>
                 <p>{userHeight.height_in}</p> */}
-                <button onClick={openPopup}>Log</button>
+                
                 <ProfileMainStatsPopup displayPopup={displayPopup} setDisplayPopup={setDisplayPopup}
                     userWeight={userWeight}
                     userHeight={userHeight}

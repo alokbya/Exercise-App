@@ -1,17 +1,21 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import ProfileMainStatsPopup from './ProfileMainStatsPopup';
-import { convertLbsToKg, convertKgToLbs, convertInToFtIn } from '../helpers/conversions.mjs'
+import { convertLbsToKg, convertKgToLbs, convertInToFtIn } from '../../helpers/conversions.mjs'
 
 import {FaEdit} from 'react-icons/fa';
 
-import '../css/Loading.css';
-import '../css/ProfileMainStats.css'
+import { ProfileContext } from '../../context/ProfileState';
+
+import '../../css/Loading.css';
+import '../../css/ProfileMainStats.css'
 
 function ProfileMainStats() {
     const [ userWeight, setUserWeight ] = useState({});
     const [ userHeight, setUserHeight ] = useState();
     const [ profileLoading, setProfileLoading ] = useState(true);
     const [ displayPopup, setDisplayPopup ] = useState(false);
+
+    const { profile, updateUserWeight, updateUserHeight } = useContext(ProfileContext);
 
     /**************************
         * Manage Popup State
@@ -35,6 +39,7 @@ function ProfileMainStats() {
             w.weight_lbs = weightObj.weight_lbs;
         }
         setUserWeight(w);
+        updateUserWeight(w.weight_lbs);
     }
 
     const scrubHeight = async (heightObj) => {
@@ -52,6 +57,7 @@ function ProfileMainStats() {
             h.height_in_total = heightObj.height_in;
         }
         setUserHeight(h);
+        updateUserHeight(h.height_in_total);
     }
 
     /******************************

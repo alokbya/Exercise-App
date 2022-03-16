@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
 
-import '../css/Popup.css';
-import '../css/Loading.css';
+import '../../css/Popup.css';
+import '../../css/Loading.css';
 
 function ProfileMainStatsPopup({displayPopup, setDisplayPopup, 
   userWeight, userHeight,
   getProfileInfo}) {
 
-  const [ localWeight, setLocalWeight ] = useState((userWeight.weight_lbs > -1 ? userWeight.weight_lbs : '230'));
-  const [ localHeightIn, setLocalHeightIn ] = useState((userHeight.height_in > -1 ? userHeight.height_in : '11'));
-  const [ localHeightFt, setLocalHeightFt ] = useState((userHeight.height_ft > -1 ? userHeight.height_ft : '5'));
+  const [ localWeight, setLocalWeight ] = useState((userWeight.weight_lbs > -1 ? userWeight.weight_lbs.toString() : '230'));
+  const [ localHeightIn, setLocalHeightIn ] = useState((userHeight.height_in > -1 ? userHeight.height_in.toString() : '11'));
+  const [ localHeightFt, setLocalHeightFt ] = useState((userHeight.height_ft > -1 ? userHeight.height_ft.toString() : '5'));
 
   const limits = {
     weight_min: 0,
@@ -26,7 +26,8 @@ function ProfileMainStatsPopup({displayPopup, setDisplayPopup,
 
   const closePopup = () => {
     setLocalWeight((userWeight.weight_lbs > -1 ? userWeight.weight_lbs : '230'));
-    setLocalHeightIn()
+    setLocalHeightIn((userHeight.height_in > -1 ? userHeight.height_in.toString() : '11'));
+    setLocalHeightFt((userHeight.height_ft > -1 ? userHeight.height_ft.toString() : '5'));
     setDisplayPopup(false);
   }
 

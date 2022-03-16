@@ -72,25 +72,6 @@ router.get('/profile', async (req, res) => {
         console.error(error);
         res.status(500).json({Error: `${error}`});
     }
-    
-
-    // get height
-    
-    // get weight
-    
-    // create new object with all VALUES
-
-
-
-    profiles.getUserProfile(filter)
-        .then(profile => {
-            const val = JSON.parse(JSON.stringify(profile))[0];
-            res.status(200).json(profile);
-        })
-        .catch(error => {
-            console.error(error);
-            res.status(500).json({Error: `${error}`});
-        })
 });
 
 // Update user profile (weight, height)

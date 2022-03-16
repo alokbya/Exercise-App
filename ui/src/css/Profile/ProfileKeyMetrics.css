@@ -1,0 +1,9 @@
+.profile-key-metrics-container {
+    max-width: 500px;
+    display: flex;
+    margin: 50px auto;
+    padding: 10px;
+    background-color: lightgray;
+    border-radius: 20px;
+    justify-content: center;
+}

@@ -1,0 +1,19 @@
+
+/*  ICON ATTRIBUTION REQUIRED - flaticon.com
+    <a href="https://www.flaticon.com/free-icons/gymnasium" title="gymnasium icons">Gymnasium icons created by Freepik - Flaticon</a> 
+*/
+
+.user-profile-icon-container {
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.user-profile-icon {
+    max-width: 250px;
+    height: auto;
+    border-radius: 50%;
+    border: 3px solid black;
+    margin: 0 auto;
+
+}

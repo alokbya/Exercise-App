@@ -1,0 +1,43 @@
+.profile-main-container {
+    max-width: 750px;
+    display: grid;
+    grid-template-columns: 1fr;
+    
+    margin: 0 auto;
+    text-align: center;
+    gap: -5px;
+    font-size: 36px;
+    padding-bottom: 10px;
+    
+}
+
+.profile-main-names {
+    display: flex;
+    margin: 0 auto;
+    height: 100%;
+    align-self: cross-end;
+    padding-bottom: 0;
+    margin-bottom: -40px;
+}
+
+#profile-main-first-name {
+    margin-right: 5px;
+    align-self: start;
+    
+    align-self: flex-start;
+}
+
+#profile-main-last-name {
+    margin-left: 5px;
+}
+.profile-main-email-container {
+    
+}
+
+#profile-main-email {
+    font-size: 16px;
+    color: gray;
+    padding: 0;
+    margin: 0;
+    font-size: 0.65em;
+}

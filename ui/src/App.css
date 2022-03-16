@@ -30,7 +30,7 @@ header {
 
 nav{
   max-width: 750px;
-  margin: 100px auto;
+  margin: 10px auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   color: black;

@@ -1,8 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router';
-import ProfileMain from '../components/ProfileMain';
-import ProfileMainStats from '../components/ProfileMainStats';
-import ProfileMainStatsPopup from '../components/ProfileMainStatsPopup';
+import ProfileKeyMetrics from '../components/UserProfile/ProfileKeyMetrics';
+import ProfileMain from '../components/UserProfile/ProfileMain';
+import ProfileMainStats from '../components/UserProfile/ProfileMainStats';
+
+import { ProfileProvider } from '../context/ProfileState';
 
 function UserProfilePage({loggedIn}) {
     const history = useHistory();
@@ -12,9 +14,11 @@ function UserProfilePage({loggedIn}) {
 
     return (
         <>
-            <h2>User Profile</h2>
-            <ProfileMain />
-            <ProfileMainStats />
+            <ProfileProvider >
+                <ProfileMain />
+                <ProfileMainStats />
+                <ProfileKeyMetrics />
+            </ProfileProvider>
         </>
     );
 }

@@ -48,7 +48,7 @@ function RegisterPage({loggedIn, setLoggedIn,
     }
 
     // JSX
-    const invalidLoginJSX = <p class="invalid-auth-text">Invalid email or password.</p>
+    const invalidLoginJSX = <p className="invalid-auth-text">Invalid email or password.</p>
     
     
     return (

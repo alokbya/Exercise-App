@@ -1,6 +1,6 @@
-.bmi-container {
+.metric-container {
     background-color: white;
-    padding: 5px;
+    padding: 5px 12px;
     border-radius: 10px;
     border: 2px solid black;
 }

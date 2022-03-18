@@ -8,11 +8,11 @@ function ExerciseList ({ exercises, deleteExercise, setExerciseToEdit, onEdit })
             <table id="exercises-table">
                 <thead>
                     <tr>
-                        <th class="reg-header name">Name</th>
-                        <th class="reg-header">Reps</th>
-                        <th class="reg-header">Weight</th>
-                        <th class="reg-header">Unit</th>
-                        <th class="reg-header date">Date</th>
+                        <th className="reg-header name">Name</th>
+                        <th className="reg-header">Reps</th>
+                        <th className="reg-header">Weight</th>
+                        <th className="reg-header">Unit</th>
+                        <th className="reg-header date">Date</th>
                         <th id="edit-header"></th>
                         <th id="delete-header"></th>
                     </tr>

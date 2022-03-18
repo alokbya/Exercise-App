@@ -8,7 +8,7 @@ function ExerciseForm({name, setName,
     return (
         <>
             <section id="exercise-form">    
-                <label for="name">Name</label>
+                <label htmlFor="name">Name</label>
                 <input 
                     type="text"
                     placeholder="Enter exercise name"
@@ -16,7 +16,7 @@ function ExerciseForm({name, setName,
                     id="name"
                     onChange={e => setName(e.target.value)} 
                 />
-                <label for="reps">Reps</label>
+                <label htmlFor="reps">Reps</label>
                 <input
                     type="number"
                     placeholder="Enter exercise set reps"
@@ -25,7 +25,7 @@ function ExerciseForm({name, setName,
                     class="number-input"
                     onChange={e => setReps(e.target.value)}
                 />
-                <label for="weight">Weight</label>
+                <label htmlFor="weight">Weight</label>
                 <section id="weight-unit">
                     <input
                         type="number"
@@ -41,7 +41,7 @@ function ExerciseForm({name, setName,
                     </select>
                 </section>
                 
-                <label for="date">Date</label>
+                <label htmlFor="date">Date</label>
                 <input
                     type="date"
                     id="date"

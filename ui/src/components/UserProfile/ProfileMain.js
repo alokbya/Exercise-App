@@ -5,7 +5,7 @@ import UserIcon from './UserIcon';
 import { ProfileContext } from '../../context/ProfileState';
 
 // CSS
-import '../../css/ProfileMain.css';
+import '../../css/Profile/ProfileMain.css';
 
 /*
     * Main component of the profile

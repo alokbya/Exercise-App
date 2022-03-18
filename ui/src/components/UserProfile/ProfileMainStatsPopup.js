@@ -5,7 +5,7 @@ import '../../css/Loading.css';
 
 function ProfileMainStatsPopup({displayPopup, setDisplayPopup, 
   userWeight, userHeight,
-  getProfileInfo}) {
+  getProfileInfo, setAddedStats}) {
 
   const [ localWeight, setLocalWeight ] = useState((userWeight.weight_lbs > -1 ? userWeight.weight_lbs.toString() : '230'));
   const [ localHeightIn, setLocalHeightIn ] = useState((userHeight.height_in > -1 ? userHeight.height_in.toString() : '11'));
@@ -20,9 +20,9 @@ function ProfileMainStatsPopup({displayPopup, setDisplayPopup,
     heightIn_max: 11
   };
 
-  /***********************
-    * Manage Popup State
-  ***********************/
+  /**************************************
+    * Manage Popup State Event Handler
+  **************************************/
 
   const closePopup = () => {
     setLocalWeight((userWeight.weight_lbs > -1 ? userWeight.weight_lbs : '230'));
@@ -77,6 +77,7 @@ function ProfileMainStatsPopup({displayPopup, setDisplayPopup,
 
     if (response.status === 201) {
       getProfileInfo();
+      setAddedStats(true);
       closePopup();
     }
   }

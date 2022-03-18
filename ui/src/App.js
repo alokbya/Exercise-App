@@ -11,6 +11,9 @@ import Footer from './components/Footer';
 import AuthenticationPage from './pages/AuthenticationPage';
 import UserProfilePage from './pages/UserProfilePage';
 
+// import context provider
+import { ExerciseProvider } from './context/ExerciseState';
+
 function App() {
   const history = useHistory();  
   const [exerciseToEdit, setExerciseToEdit] = useState();
@@ -25,21 +28,23 @@ function App() {
         </header>
         <Navigation loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
         <main>
-          <Route path="/" exact>
-            <HomePage setExerciseToEdit={setExerciseToEdit} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
-          </Route>
-          <Route path="/login">
-            <AuthenticationPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-          </Route>
-          <Route path="/create-exercise">
-            <CreateExercisePage loggedIn={loggedIn}/>
-          </Route>
-          <Route path="/edit-exercise">
-            <EditExercisePage exercise={exerciseToEdit}/>
-          </Route>
-          <Route path="/profile" exact>
-            <UserProfilePage loggedIn={loggedIn}/>
-          </Route>
+          <ExerciseProvider>
+            <Route path="/" exact>
+              <HomePage setExerciseToEdit={setExerciseToEdit} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+            </Route>
+            <Route path="/login">
+              <AuthenticationPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            </Route>
+            <Route path="/create-exercise">
+              <CreateExercisePage loggedIn={loggedIn}/>
+            </Route>
+            <Route path="/edit-exercise">
+              <EditExercisePage exercise={exerciseToEdit}/>
+            </Route>
+            <Route path="/profile" exact>
+              <UserProfilePage loggedIn={loggedIn}/>
+            </Route>
+          </ExerciseProvider>
         </main>
         <footer>
           <Footer/>

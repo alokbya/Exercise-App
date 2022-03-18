@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router';
-import LoginForm from '../components/LoginForm';
-import RegisterForm from '../components/RegisterForm'
+import LoginForm from '../components/Authentication/LoginForm';
+import RegisterForm from '../components/Authentication/RegisterForm'
 
 function AuthenticationPage({loggedIn, setLoggedIn}) {
     const history = useHistory();
     // Hooks
-    const [ email, setEmail ] = useState();
-    const [ password, setPassword ] = useState();
-    const [ firstName, setFirstName ] = useState();
-    const [ lastName, setLastName ] = useState();
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ firstName, setFirstName ] = useState('');
+    const [ lastName, setLastName ] = useState('');
     const [ loginUser, setLoginUser ] = useState(true);
     const [ registerUser, setRegisterUser ] = useState(false);
     const [ authenticating, setAuthenticating ] = useState(false);

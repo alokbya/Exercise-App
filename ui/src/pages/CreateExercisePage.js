@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import ExerciseForm from '../components/ExerciseForm';
+import ExerciseForm from '../components/Exercise/ExerciseForm';
 
 function CreateExercisePage({loggedIn}) {
 
@@ -8,7 +8,7 @@ function CreateExercisePage({loggedIn}) {
     const [reps, setReps] = useState(0);
     const [weight, setWeight] = useState(0);
     const [unit, setUnit] = useState("lbs");
-    const [date, setDate] = useState('03-08-2022');
+    const [date, setDate] = useState('');
 
     let history = useHistory();
     if (!loggedIn) {

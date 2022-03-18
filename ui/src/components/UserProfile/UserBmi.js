@@ -14,7 +14,7 @@ const UserBmi = () => {
 
   return (
     <>
-      <div className="bmi-container">
+      <div className="metric-container">
         <div className="metric-title">
           BMI
         </div>

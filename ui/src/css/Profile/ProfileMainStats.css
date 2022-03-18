@@ -1,0 +1,108 @@
+
+.profile-stats {
+    max-width: 500px;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+    align-items: center;
+}
+
+.user-weight {
+    grid-column-start: 2;
+    text-align: center;
+    margin-right: 15px;
+    
+}
+.user-height {
+    text-align: center;
+    margin-left: 15px;
+}
+
+.profile-bio-stat {
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.weight-date-added, .height-date-added{
+    color: gray;
+    font-style: italic;
+    font-size: 0.75em;
+}
+
+.open-popup-btn {
+    background-color: transparent;
+    color: steelblue;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    margin-left: 20px;
+    
+}
+
+.edit-icon {
+    height: 36px;
+    width: 36px;
+}
+
+.edit-icon:hover {
+    cursor: pointer;
+    color: coral;
+}
+
+.edit-icon:active {
+    color: rgba(255,99,71);
+}
+
+.height-weight-container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 20px;
+}
+
+.height-weight-container:hover {
+    cursor: pointer;
+}
+
+.first-add-height-weight-text {
+    text-align: center;
+    /* min-height: 100px; */
+    overflow: hidden;
+    height: 50px;
+    font-size: 25px;
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.first-edit-icon {
+    margin-right: 20px;
+    align-self: center;
+    
+    width: 36px;
+    height: 36px;
+}
+
+.added {
+    background-color: white;
+    color: black;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 0.5fr;
+}
+.added:hover {
+    cursor: auto;
+}
+
+.not-added {
+    background-color: coral;
+    color: white;
+    display: flex;
+    margin-top: 30px;
+    max-width: 300px;
+    text-align: center;
+    padding: 10px;
+}
+.not-added:hover {
+    box-shadow: gray 15px 15px 50px;
+}

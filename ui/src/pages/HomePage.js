@@ -1,19 +1,28 @@
-import React from 'react';
-import ExerciseList from '../components/ExerciseList';
+import React, { useContext } from 'react';
+import ExerciseList from '../components/Exercise/ExerciseList';
 
 import {Link} from 'react-router-dom';
 import {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 
+import { ExerciseContext } from '../context/ExerciseState';
+
 function HomePage({setExerciseToEdit, loggedIn}) {
-    const [exercises, setExercises] = useState([]);
-    const [ isLoading, setIsLoading ] = useState(false);
+    
     const history = useHistory();
+    const { exercises , replaceExercises } = useContext(ExerciseContext);
+
+    const [e, setExercises] = useState([]);
+    const [ isLoading, setIsLoading ] = useState(false);
+    
+    /*
+
+    */
 
     const getExercises = async () => {
         const response = await fetch('/exercises');
         const exercises = await response.json();
-        setExercises(exercises);
+        replaceExercises(exercises);
         setIsLoading(false);
     }
 
@@ -24,6 +33,7 @@ function HomePage({setExerciseToEdit, loggedIn}) {
         if (response.status === 204) {
             const getResponse = await fetch('/exercises');
             const exercises = await getResponse.json();
+
             setExercises(exercises);
         } else {
             console.error(`Failed to delete exercise with id = ${id}, status code = ${response.status}`);
@@ -48,10 +58,10 @@ function HomePage({setExerciseToEdit, loggedIn}) {
 
     if (isLoading) {
         return (
-            <div class="loader"></div>
+            <div className="loader"></div>
         )
     }
-    else if (!isLoading && exercises.length === 0) {
+    else if (exercises.length === 0) {
         return (
             <>
                 <section>

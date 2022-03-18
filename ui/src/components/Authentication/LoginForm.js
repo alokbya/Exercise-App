@@ -39,7 +39,7 @@ function LoginForm({loggedIn, setLoggedIn, email, setEmail, password, setPasswor
         setRegisterUser(true);
     }
 
-    const invalidLoginJSX = <p class="invalid-auth-text">Invalid email or password.</p>
+    const invalidLoginJSX = <p className="invalid-auth-text">Invalid email or password.</p>
 
     return (
         <>

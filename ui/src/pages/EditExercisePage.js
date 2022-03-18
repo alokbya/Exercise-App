@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { useHistory } from 'react-router';
-import ExerciseForm
- from '../components/ExerciseForm';
+import ExerciseForm from '../components/Exercise/ExerciseForm';
 
 function EditExercisePage({exercise}) {
     

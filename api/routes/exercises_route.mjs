@@ -1,5 +1,4 @@
-import express, { application } from 'express';
-import jwt from 'jsonwebtoken';
+import express from 'express';
 import { verifyToken } from '../auth/auth.mjs';
 import * as exercises from '../models/exercise_model.mjs';
 const router = express.Router();
